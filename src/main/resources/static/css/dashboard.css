@@ -1,0 +1,68 @@
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../images/house-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    width: 320px;
+    backdrop-filter: blur(5px);
+}
+
+.dashboard-card h2 {
+    margin-bottom: 8px;
+    font-size: 24px;
+    color: #333;
+}
+
+.role-text {
+    margin-bottom: 30px;
+}
+
+.dashboard-links a {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.dashboard-links a:hover {
+    color: #0056b3;
+}
+
+
+.logout-btn {
+    background-color: #E74C3C;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    width: 120px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logout-btn:hover {
+    background-color: #C0392B;
+}

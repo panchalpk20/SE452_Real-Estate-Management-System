@@ -1,0 +1,134 @@
+    .property-container {
+        background: #fff;
+        padding: 30px;
+        margin: 40px auto;
+        max-width: 900px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border-radius: 12px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .property-container h1 {
+        font-size: 30px;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .property-container p {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .property-container strong {
+        font-weight: 600;
+        color: #000;
+    }
+
+    .property-description {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #444;
+        line-height: 1.5;
+    }
+
+    .property-images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .property-images img {
+        width: 280px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+
+    .property-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+
+    .favorite-buttons form {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+
+    .btn {
+        display: inline-block;
+        font-size: 14px;
+        padding: 10px 16px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+
+    .btn-danger {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+
+    .contact-agent {
+        margin-top: 20px;
+    }
+
+    .contact-agent label {
+        font-weight: 600;
+    }
+
+    .contact-agent textarea {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-top: 8px;
+        resize: vertical;
+    }
+
+    .contact-agent button {
+        margin-top: 12px;
+    }
+
+    .back-link {
+        text-align: right;
+        margin-top: 30px;
+    }
+
+    .back-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .back-link a:hover {
+        text-decoration: underline;
+    }

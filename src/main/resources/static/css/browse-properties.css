@@ -1,0 +1,252 @@
+
+.page-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.card-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 2em;
+}
+
+.message-box {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.filter-form > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 120px;
+    flex: 1;
+}
+
+.filter-form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.filter-form input[type="text"],
+.filter-form input[type="number"],
+.filter-form select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+.filter-form button,
+.filter-form .btn-clear {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.filter-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+.filter-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.filter-form .btn-clear {
+    background-color: #6c757d;
+    color: #fff;
+}
+.filter-form .btn-clear:hover {
+    background-color: #5a6268;
+}
+
+
+.property-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.property-card {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 15px;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.property-card-image {
+    flex-shrink: 0;
+    width: 250px;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.property-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.property-card-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.property-card-info h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.property-card-info p {
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.property-card-info strong {
+    color: #333;
+}
+
+.property-card-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.property-card-actions .btn-details {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+.property-card-actions .btn-details:hover {
+    background-color: #0056b3;
+}
+
+.no-properties-found {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .page-content-wrapper {
+        padding: 10px;
+    }
+
+    .card-container {
+        padding: 20px 15px;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-form > div {
+        min-width: unset;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+        align-self: stretch;
+    }
+    .filter-buttons button,
+    .filter-buttons .btn-clear {
+        width: 100%;
+    }
+
+    .property-card {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .property-card-image {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 15px;
+    }
+
+    .property-card-info {
+        text-align: center;
+    }
+
+    .property-card-actions {
+        text-align: center;
+        width: 100%;
+    }
+    .property-card-actions .btn-details {
+        width: 100%;
+    }
+}

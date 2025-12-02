@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Message</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header-style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/view-message.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+
+<div class="center-card">
+    <h2>Message Details</h2>
+    <div>
+        <p><strong>Property:</strong> <span th:text="${message.property != null ? message.property.title : 'N/A'}">Property Title</span></p>
+        <p><strong>From:</strong> <span th:text="${message.sender != null ? message.sender.firstName + ' ' + message.sender.lastName : 'N/A'}">Sender Name</span></p>
+        <p><strong>Sent At:</strong> <span th:text="${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm')}">2024-06-03 12:00</span></p>
+        <p><strong>Message:</strong></p>
+        <div class="reply-content" th:text="${message.content}">Message content</div>
+    </div>
+
+    <div class="reply-section">
+        <div th:if="${message.reply != null and !#strings.isEmpty(message.reply)}">
+            <span class="reply-label">Reply:</span>
+            <div class="reply-content" th:text="${message.reply}">Reply content</div>
+        </div>
+        <div th:unless="${message.reply != null and !#strings.isEmpty(message.reply)}">
+            <form th:action="@{/messages/reply/{id}(id=${message.id})}" method="post">
+                <label class="reply-label" for="reply">Reply to this message:</label>
+                <textarea id="reply" name="reply" rows="4" cols="40" required></textarea>
+                <br>
+                <button type="submit" class="btn btn-reply">Send Reply</button>
+            </form>
+        </div>
+    </div>
+    <div style="margin-top: 24px;">
+        <a th:href="@{/messages/agent}" class="btn btn-back">Back to Messages</a>
+    </div>
+</div>
+</body>
+</html>

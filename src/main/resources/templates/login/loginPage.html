@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</head>
+
+<body>
+    <div th:replace="~{fragments :: header}"></div>
+    <div class="d-flex flex-center hv-90">
+
+        <div class="login-container bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div th:if="${successMessage}" class="success-message">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="failure-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${error}" class="failure-message">
+                <p th:text="${error}"></p>
+            </div>
+
+            <h1>Welcome Back!</h1>
+
+            <form method="post" th:action="@{/login}" th:object="${loginRequest}" class="space-y-5">
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input id="username" th:field="*{email}" type="text" class="form-input"
+                        placeholder="you@example.com" required>
+
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" th:field="*{password}" type="password" class="form-input"
+                        placeholder="********" required>
+
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500"></span>
+                </div>
+
+                <label class="show-password-label">
+                    <input class="checkbox-margin mr-2" onclick="togglePasswordVisibility()" type="checkbox" />
+                    Show Password
+                </label>
+
+
+                <button type="submit">
+                    Log In
+                </button>
+            </form>
+
+            <p class="section-spacing text-center text-gray-600 text-sm mt-6">
+                Don't have an account?
+                <a th:href="@{/register}" class="text-blue-600 hover:underline">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

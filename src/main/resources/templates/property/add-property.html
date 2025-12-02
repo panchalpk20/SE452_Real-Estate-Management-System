@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/addproperty.css}" />
+    <meta charset="UTF-8">
+    <title>Add New Property</title>
+
+    <script>
+        document.getElementById('files').addEventListener('change', function (event) {
+            const previewDiv = document.getElementById('image-preview');
+            previewDiv.innerHTML = ''; // Clear previous previews
+
+            Array.from(event.target.files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '120px';
+                        img.style.maxHeight = '120px';
+                        img.style.margin = '5px';
+                        previewDiv.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="page-content-wrapper">
+        <div class="card-container">
+            <h2>Add New Property</h2>
+
+            <div th:if="${successMessage}" class="success-message">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="failure-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${error}" class="failure-message">
+                <p th:text="${error}"></p>
+            </div>
+
+            <form th:action="@{/properties/add}" th:object="${addPropertyDto}" method="post"
+                enctype="multipart/form-data">
+                <div>
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" required />
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="price">Price ($):</label>
+                    <input type="number" id="price" th:field="*{price}" step="0.01" required />
+                    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" th:field="*{location}" required />
+                    <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="zipCode">Zip Code:</label>
+                    <input type="text" id="zipCode" maxlength="5" th:field="*{zipCode}" required />
+                    <span th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="size">Size (sq ft):</label>
+                    <input type="number" id="size" th:field="*{size}" required />
+                    <span th:if="${#fields.hasErrors('size')}" th:errors="*{size}" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="description">Description:</label>
+                    <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                        class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label for="files">Upload Property Images:</label>
+                    <input type="file" id="files" name="files" multiple="multiple" accept="image/*" />
+                </div>
+
+                <div id="image-preview" style="margin-top: 10px;"></div>
+
+                <button type="submit">Add Property</button>
+            </form>
+
+        </div>
+    </div>
+    <div th:replace="~{fragments :: footer}"></div>
+
+</body>
+
+</html>

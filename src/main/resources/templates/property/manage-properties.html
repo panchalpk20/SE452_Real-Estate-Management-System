@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/manage-properties.css}" />
+    <title>Manage Properties</title>
+</head>
+
+<body>
+    <!--header-->
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="page-content-wrapper">
+        <div class="card-container">
+            <h2>Manage Your Properties</h2>
+
+            <div th:if="${successMessage}" style="color: green;">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" style="color: red;">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price ($)</th>
+                        <th>Location</th>
+                        <th>Zip Code</th>
+                        <th>Size (sq ft)</th>
+                        <th>Images</th>
+                        <th>Favorites</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="property : ${properties}">
+                        <td th:text="${property.title}">Property Title</td>
+                        <td th:text="${property.price}">$ XXXX.XX</td>
+                        <td th:text="${property.location}">City, State</td>
+                        <td th:text="${property.zipCode}">Zipcode</td>
+                        <td th:text="${property.size}">XXXX sq ft</td>
+                        <td>
+                            <div class="property-images-stack-container">
+                                <div th:each="image : ${property.images}" class="property-thumbnail-item">
+                                    <img th:src="@{/images/uploads/{id}/{filename}(id=${property.id}, filename=${image.imageFilename})}"
+                                        alt="Property Image" class="property-thumbnail" />
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+
+                            <span th:text="${property.favoritesCount} ?: 0">0</span>
+                        </td>
+                        <td class="actions-cell">
+                            <!--            Edit property -->
+                            <a th:href="@{/properties/edit/{id}(id=${property.id})}" class="btn">Edit</a>
+                            <br>
+                            <!--            Delete property -->
+                            <form th:action="@{/properties/delete/{id}(id=${property.id})}" method="post"
+                                style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this property?');">Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${properties.empty}">
+                        <td colspan="7">No properties found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

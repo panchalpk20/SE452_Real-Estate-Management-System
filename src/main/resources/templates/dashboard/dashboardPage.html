@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+</head>
+
+<body style="margin: 0; padding: 0; min-height: 100vh;">
+
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="dashboard-container">
+
+        <div class="dashboard-card">
+            <h2 th:text="'Welcome User, ' + ${user.firstName} + ' ' + ${user.lastName}">User Name</h2>
+            <div th:if="${successMessage}" class="success-message">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="failure-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${error}" class="failure-message">
+                <p th:text="${error}"></p>
+            </div>
+
+            <div class="role-text">
+                Your role:
+                <span th:each="auth : ${#authentication.authorities}" th:text="${auth.authority}"></span>
+            </div>
+
+            <div class="dashboard-links">
+                <!-- Admin Links -->
+                <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                    <a th:href="@{/profile}">My Profile</a>
+                    <a th:href="@{/agents/manage}">Manage Users</a>
+                    <a th:href="@{/agents/create}">Create Agent</a>
+                </div>
+
+                <!-- Buyer Links -->
+                <div th:if="${#authorization.expression('hasAuthority(''BUYER'')')}">
+                    <a th:href="@{/profile}">My Profile</a>
+                    <a th:href="@{/properties/list}">Browse Properties</a>
+                    <a th:href="@{/favorites/favorites}">Saved Favourites</a>
+                    <a th:href="@{/messages/buyer}">View Messages</a>
+                </div>
+
+                <!-- Agent Links -->
+                <div th:if="${#authorization.expression('hasAuthority(''AGENT'')')}">
+                    <a th:href="@{/profile}">My Profile</a>
+                    <a th:href="@{/properties/manage}">Manage Listings</a>
+                    <a th:href="@{/properties/add}">Add New Property</a>
+                    <a th:href="@{/messages/agent}">View Messages</a>
+                </div>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Hot Properties - Welcome</title>
+    <link rel="stylesheet" th:href="@{/css/landingPage.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+
+</head>
+
+<body>
+    <div th:replace="~{fragments :: header}"></div>
+    <div class="center-container">
+        <div class="landing-card">
+            <h2 class="landing-title">Welcome to Hot Properties</h2>
+            <div class="button-group">
+                <a th:href="@{/login}" class="btn">Login</a>
+                <a th:href="@{/register}" class="btn">Register</a>
+            </div>
+            <div class="version-text">
+                Version: <span th:text="${version}">dev</span>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

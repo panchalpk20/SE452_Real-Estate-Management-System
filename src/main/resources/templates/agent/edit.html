@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Agent</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/register.css}" />
+  <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+
+  <script>
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</head>
+
+<body>
+
+  <div th:replace="~{fragments :: header}"></div>
+
+  <div class="d-flex flex-center hv-90">
+    <div class="register-container">
+      <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+      </div>
+      <div th:if="${errorMessage}" class="failure-message">
+        <p th:text="${errorMessage}"></p>
+      </div>
+      <div th:if="${error}" class="failure-message">
+        <p th:text="${error}"></p>
+      </div>
+
+      <h2>Edit Agent Account</h2>
+
+      <form th:action="@{/agents/update}" th:object="${agentDto}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" th:field="*{firstName}" class="form-input" placeholder="Enter first name"
+            required>
+          <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-red-500"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" th:field="*{lastName}" class="form-input" placeholder="Enter last name"
+            required>
+          <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-red-500"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" th:field="*{email}" class="form-input" placeholder="you@example.com" readonly>
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500"></span>
+        </div>
+
+        <!-- <div class="form-group">
+        <label for="password">New Password (leave blank to keep current)</label>
+        <input type="password" id="password" th:field="*{password}" class="form-input" placeholder="********">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500"></span>
+        <label class="profile-table">
+          <input class="checkbox-margin" onclick="togglePasswordVisibility()" type="checkbox"/>
+          Show Password
+        </label>
+      </div> -->
+
+        <button type="submit">Update Agent</button>
+      </form>
+
+      <p class="text-center text-gray-600">
+        Go back to <a href="/agents/manage">Manage Agents</a>
+      </p>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

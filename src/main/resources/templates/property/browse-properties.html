@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/browse-properties.css}" />
+    <meta charset="UTF-8">
+    <title>Browse Properties</title>
+</head>
+
+<body>
+
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="page-content-wrapper">
+        <div class="card-container">
+            <h1>Browse Properties</h1>
+
+            <div th:if="${successMessage}" class="success-message">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="failure-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${error}" class="failure-message">
+                <p th:text="${error}"></p>
+            </div>
+
+            <form th:action="@{/properties/list}" class="filter-form" method="get" th:object="${propertyFilterDto}">
+                <div>
+                    <label for="zipCode">Zip Code:</label>
+                    <input type="text" id="zipCode" th:field="*{zipCode}" maxlength="5">
+                </div>
+                <div>
+                    <label for="minSqft">Min Sq. Ft.:</label>
+                    <input type="number" id="minSqft" th:field="*{minSqft}">
+                </div>
+                <div>
+                    <label for="minPrice">Min Price:</label>
+                    <input type="number" id="minPrice" th:field="*{minPrice}" step="any">
+                </div>
+                <div>
+                    <label for="maxPrice">Max Price:</label>
+                    <input type="number" id="maxPrice" th:field="*{maxPrice}" step="any">
+                </div>
+                <div>
+                    <label for="sortOrder">Sort By:</label>
+                    <select id="sortOrder" th:field="*{sortOrder}">
+                        <option value="">ID (Default)</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="filter-buttons" type="submit">Apply Filters</button>
+                </div>
+                <div>
+                    <a class="btn-clear" th:href="@{/properties/list}">Clear Filters</a>
+                </div>
+            </form>
+
+            <div th:if="${properties.isEmpty()}">
+                No properties found matching your criteria.
+            </div>
+
+            <div th:unless="${properties.isEmpty()}">
+                <div th:each="property : ${properties}" class="property-card">
+                    <div class="property-card-image">
+
+                        <img th:if="${not #lists.isEmpty(property.images) and property.images[0] != null}"
+                            th:src="@{/images/uploads/{id}/{filename}(id=${property.id}, filename=${property.images[0].imageFilename})}"
+                            alt="Property image" width="400" height="200">
+
+                    </div>
+
+                    <div class="property-card-info">
+                        <h3><span th:text="${property.title}">Property Title</span></h3>
+                        <p><strong>Price:</strong> $<span
+                                th:text="${#numbers.formatDecimal(property.price, 0, 'COMMA', 2, 'POINT')}">123,456.78</span>
+                        </p>
+                        <p><strong>Location:</strong> <span th:text="${property.location}">City, State</span></p>
+                        <p><strong>Size:</strong> <span th:text="${property.size}">1200</span> sq. ft.</p>
+                        <p><strong>Zip Code:</strong> <span th:text="${property.zipCode}">12345</span></p>
+                        <div class="property-card-actions">
+                            <a class="btn-details" th:href="@{/properties/view/{id}(id=${property.id})}">View
+                                Details</a>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+
+
+</body>
+
+</html>

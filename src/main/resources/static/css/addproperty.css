@@ -1,0 +1,88 @@
+
+
+.page-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.card-container {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.card-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.card-container form div {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.card-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.card-container input[type="text"],
+.card-container input[type="number"],
+.card-container textarea,
+.card-container input[type="file"] {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+.card-container textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+.card-container input[type="file"] {
+    padding: 5px;
+}
+
+
+.back-link-container {
+    margin-top: 18px;
+    text-align: center;
+}
+
+.back-link-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+.back-link-container a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}

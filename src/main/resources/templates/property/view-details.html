@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/view-details.css}" />
+    <link rel="stylesheet" th:href="@{/css/lightbox.css}" />
+
+    <meta charset="UTF-8">
+    <title>Property Details</title>
+</head>
+
+<body>
+
+    <!--header-->
+    <div th:replace="~{fragments :: header}"></div>
+
+    <div class="property-container">
+
+        <div class="property-header">
+            <h1><span th:text="${property.title}">Property Title</span></h1>
+
+            <div class="favorite-buttons">
+                <form th:if="${!isFavorite}" th:action="@{/favorites/add}" method="post">
+                    <input type="hidden" name="propertyId" th:value="${property.id}" />
+                    <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                </form>
+
+                <form th:if="${isFavorite}" th:action="@{/favorites/remove}" method="post">
+                    <input type="hidden" name="propertyId" th:value="${property.id}" />
+                    <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${successMessage}" class="success-message">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" class="failure-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <div th:if="${error}" class="failure-message">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${property}">
+
+            <p><strong>Price:</strong> $<span
+                    th:text="${#numbers.formatDecimal(property.price, 0, 'COMMA', 2, 'POINT')}">123,456.78</span>
+            </p>
+            <p><strong>Location:</strong> <span th:text="${property.location}">City, State</span></p>
+            <p><strong>Size:</strong> <span th:text="${property.size}">1200</span> sq. ft.</p>
+
+            <h3>Description:</h3>
+            <p th:text="${property.description}">A beautiful home...</p>
+
+
+            <h3>Property Images:</h3>
+            <div th:if="${not #lists.isEmpty(property.images)}">
+                <div class="thumbnail-container">
+                    <div class="thumbnail-item" th:each="image, iterStat : ${property.images}">
+                        <img class="demo cursor"
+
+                            th:src="@{/images/uploads/{id}/{filename}(id=${property.id}, filename=${image.imageFilename})}"
+                            th:onclick="|openLightbox(${iterStat.index + 1})|" alt="Property Image" />
+
+                    </div>
+                </div>
+            </div>
+            <div th:unless="${not #lists.isEmpty(property.images)}">
+                <img src="https://placehold.co/600x400?text=No-image" alt="No Image" width="600">
+            </div>
+
+            <hr />
+            <h3>Contact the Agent:</h3>
+            <form th:action="@{/messages/send}" method="post">
+                <input type="hidden" name="propertyId" th:value="${property.id}" />
+                <div>
+                    <label for="message">Your Message:</label><br />
+                    <textarea id="message" name="message" rows="5" cols="50"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+
+            <hr />
+            <a th:href="@{/properties/list}">← Back to Listings</a>
+        </div>
+        <div th:unless="${property}">
+            <p>Property details could not be loaded.</p>
+        </div>
+
+        <div id="myModal" class="modal">
+            <span class="close cursor" onclick="closeLightbox()">&times;</span>
+            <div class="modal-content">
+
+
+                <div th:each="image, iterStat : ${property.images}">
+                    <div class="mySlides" style="display:none">
+                        <div class="numbertext" th:text="${iterStat.count + '/' + iterStat.size}">1 / 4</div>
+                        <img th:src="@{/images/uploads/{id}/{filename}(id=${property.id}, filename=${image.imageFilename})}"
+                            style="width:100%" th:alt="${image.imageFilename}" />
+                    </div>
+                </div>
+
+                <!--            image viewer-->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+
+                <div class="row" style="margin-top:15px;">
+                    <div class="column" th:each="image, iterStat : ${property.images}">
+                        <img class="demo cursor"
+                            th:src="@{/images/uploads/{id}/{filename}(id=${property.id}, filename=${image.imageFilename})}"
+                            th:onclick="|currentSlide(${iterStat.index + 1})|" th:alt="${image.imageFilename}"
+                             style="width:100%;max-height: 500px;object-fit: cover;" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div th:replace="~{fragments :: footer}"></div>
+
+</body>
+
+<script>
+
+    let slideIndex = 1;
+
+    // Call showSlides initially to set up the first image and caption (important for proper initialization)
+    // Only call if there are images, to prevent errors on properties with no images
+    document.addEventListener('DOMContentLoaded', function () {
+        let slides = document.getElementsByClassName("mySlides");
+        if (slides.length > 0) {
+            showSlides(slideIndex);
+        }
+    });
+
+
+    function openLightbox(n) {
+        document.getElementById("myModal").style.display = "block";
+        currentSlide(n); // Display the clicked image
+    }
+
+    function closeLightbox() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("demo");
+        let captionText = document.getElementById("caption");
+
+        if (slides.length === 0) { // No images to show
+            captionText.innerHTML = "No Image Available";
+            return;
+        }
+
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt || 'Property Image';
+    }
+
+
+</script>
+
+
+
+</html>

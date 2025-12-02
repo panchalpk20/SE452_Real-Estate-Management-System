@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Agents</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+  <link rel="stylesheet" th:href="@{/css/manage-page.css}" />
+</head>
+
+<body>
+
+  <div th:replace="~{fragments :: header}"></div>
+
+  <div class="manage-container">
+    <h2 class="manage-title">Manage Agents</h2>
+
+
+    <div th:if="${successMessage}" class="success-message">
+      <p th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${errorMessage}" class="failure-message">
+      <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="card">
+
+      <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+        <a href="/" class="btn btn-back">Dashboard</a>
+        <a href="/agents/create" class="btn btn-add">+ Add New Agent</a>
+      </div>
+
+      <table class="agents-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user, iterStat : ${allUsers}">
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${user.firstName}">John</td>
+            <td th:text="${user.lastName}">Doe</td>
+            <td th:text="${user.email}">john@example.com</td>
+            <td th:text="${user.role.name}">AGENT</td>
+            <td>
+              <a th:href="@{'/agents/delete/' + ${user.email}}" class="btn btn-delete"
+                onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/login.css}" />
+  <link rel="stylesheet" th:href="@{/css/header-style.css}" />
+  <link rel="stylesheet" th:href="@{/css/editprofile.css}" />
+</head>
+
+<body>
+
+  <!--added header-->
+  <div th:replace="~{fragments :: header}"></div>
+
+  <div class="login-container">
+
+    <h1>Edit Profile</h1>
+
+    <div th:if="${successMessage}" class="success-message">
+      <p th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${errorMessage}" class="failure-message">
+      <p th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${error}" class="failure-message">
+      <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/profile/edit}" th:object="${editProfileDto}" method="post">
+      <label for="firstName">First Name</label>
+
+      <input type="text" id="firstName" th:field="*{firstName}" required>
+      <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: red;"></div>
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" th:field="*{lastName}" required>
+      <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red;"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" th:value="${email}" readonly
+        style="background-color: #f0f0f0; cursor: not-allowed;">
+
+
+      <div class="centered-link">
+        <button type="submit">Save Changes</button>
+        <a th:href="@{/profile}">
+          <button type="button">Cancel</button>
+        </a>
+      </div>
+    </form>
+
+    <div class="centered-link">
+      <a th:href="@{/dashboard}">
+        <button type="button">Back to Dashboard</button>
+      </a>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments :: footer}"></div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const nameFields = [document.getElementById("firstName"), document.getElementById("lastName")];
+
+      nameFields.forEach(field => {
+        field.addEventListener("keypress", function (e) {
+          const char = String.fromCharCode(e.which);
+          if (!/^[a-zA-Z\s]*$/.test(char)) {
+            e.preventDefault();
+          }
+        });
+
+        field.addEventListener("paste", function (e) {
+          e.preventDefault();
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

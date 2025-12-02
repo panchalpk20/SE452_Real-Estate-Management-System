@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Profile</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header-style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/profile.css}"/>
+
+</head>
+<body>
+
+<!--added header-->
+<div th:replace="~{fragments :: header}"></div>
+
+<div class="login-container">
+
+    <h1>My Profile</h1>
+
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${errorMessage}" class="failure-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${error}" class="failure-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <table class="profile-table">
+        <tr>
+            <td><strong>First Name:</strong></td>
+            <td th:text="${user.firstName}">First Name</td>
+        </tr>
+        <tr>
+            <td><strong>Last Name:</strong></td>
+            <td th:text="${user.lastName}">Last Name</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td th:text="${user.email}">Email</td>
+        </tr>
+        <tr>
+            <td><strong>Role:</strong></td>
+            <td th:text="${user.role.name}">Role</td>
+        </tr>
+    </table>
+
+    <div class="centered-link">
+        <a th:href="@{/editprofile}">
+            <button>Edit Profile</button>
+        </a>
+        <a th:href="@{/dashboard}">
+            <button>Back to Dashboard</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>
